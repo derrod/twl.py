@@ -11,12 +11,91 @@ All requests are POST requests with JSON body to `https://sds.amazon.com`.
 
 All method names are prefixed with `com.amazonaws.gearbox.softwaredistribution.service.model.SoftwareDistributionService`
 
+## `GetEntitlements`
+
+Request Body:
+```json
+{
+    "clientId": "Fuel",
+    "syncPoint": null
+}
+```
+
+Response:
+```json
+{
+  "entitlements": [
+    // Game entitlement
+    {
+      "channelId": "<?>",
+      "entitlementDateFromEpoch": "1485270623433",
+      "id": "<entitlement id>",
+      "product": {
+        "asin": "B01LY6I8SV",
+        "asinVersion": 17,
+        "description": "Streamline Product Description",
+        "id": "d229a310-2468-4f0c-b49b-4a6dcdd47809",
+        "productDetail": {
+          "details": {
+            "backgroundUrl1": "https://images-na.ssl-images-amazon.com/images/I/A1s5Dn4PbcL.jpg",
+            "backgroundUrl2": "https://images-na.ssl-images-amazon.com/images/I/71ATqW8g9+L.jpg",
+            "publisher": "Proletariat Inc.",
+            "screenshots": [
+              "https://images-na.ssl-images-amazon.com/images/I/A15t1eN9L5L.jpg",
+              "https://images-na.ssl-images-amazon.com/images/I/A1+q5s77ZEL.jpg",
+              "https://images-na.ssl-images-amazon.com/images/I/A1s5Dn4PbcL.jpg",
+              "https://images-na.ssl-images-amazon.com/images/I/A1UQ65tz4vL.jpg",
+              "https://images-na.ssl-images-amazon.com/images/I/91Br+c5JybL.jpg",
+              "https://images-na.ssl-images-amazon.com/images/I/91UbQCYgEFL.jpg",
+              "https://images-na.ssl-images-amazon.com/images/I/91u9kbA-dDL.jpg",
+              "https://images-na.ssl-images-amazon.com/images/I/A1o0iVrtDzL.jpg",
+              "https://images-na.ssl-images-amazon.com/images/I/A1ZZAFon2wL.jpg"
+            ],
+            "videos": [
+              "https://www.twitch.tv/videos/133202883"
+            ]
+          },
+          "iconUrl": "https://images-na.ssl-images-amazon.com/images/I/61242jdqe0L.png"
+        },
+        "productLine": "Twitch:FuelGame",
+        "sku": "com.proletariat.streamline",
+        "title": "Streamline",
+        "type": "Entitlement",
+        "vendorId": "PS363"
+      },
+      "state": "LIVE"
+    },
+    // Non-game entitlement
+    {
+      "channelId": "<?>",
+      "entitlementDateFromEpoch": "1485270643825",
+      "id": "<entitlement id>",
+      "product": {
+        "asinVersion": 0,
+        "description": "This is a Twitch Prime bundle",
+        "id": "c9dae41c-8885-4753-bed0-d21a7b45ae94",
+        "productLine": "Twitch:FuelEntitlement",
+        "sku": "com.proletariat.streamline.prime_bundle",
+        "title": "Streamline Twitch Prime Bundle",
+        "type": "Entitlement",
+        "vendorId": "PS363"
+      },
+      "state": "LIVE"
+    },
+	...
+  ]
+}
+```
+
+Note: the entitlement id is used for getting the manifest
+
+
 ## `GetDownloadManifest`
 
 Request Body:
 ```json
 {
-    "entitlementId": "<product Id>"
+    "entitlementId": "<entitlement Id>"
 }
 ```
 
@@ -33,7 +112,7 @@ Response:
 Request Body:
 ```json
 {
-  "adgGoodId": "<product Id>",
+  "adgGoodId": "<entitlement Id>",
   "Operation": "GetDownloadManifestV2"
 }
 ```
@@ -74,7 +153,7 @@ Request Body
     "NONE",
     "FUEL_PATCH"
   ],
-  "adgGoodId": "<product Id>"
+  "adgGoodId": "<entitlement Id>"
 }
 ```
 
