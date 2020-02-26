@@ -12,6 +12,7 @@ Authenticate with Twitch (follow on-screen instructions)
 ```
 $ py -3.6 twl.py --auth
 ```
+(Authentication information will be saved in `$HOME/twl.json` on Linux or `%USERPROFILE%/twl.json` on Windows)
 
 List games:
 ```
