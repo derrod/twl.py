@@ -1,0 +1,76 @@
+syntax = "proto3";
+package tv.twitch.fuel.sds;
+
+// Proto extractor compiled unit - https://github.com/HearthSim/proto-extractor
+
+
+// ref: Tv.Twitch.Fuel.Sds.CompressionAlgorithm
+enum CompressionAlgorithm {
+	none = 0;
+	lzma = 1;
+}
+
+// ref: Tv.Twitch.Fuel.Sds.HashAlgorithm
+enum HashAlgorithm {
+	sha256 = 0;
+	shake128 = 1;
+}
+
+// ref: Tv.Twitch.Fuel.Sds.SignatureAlgorithm
+enum SignatureAlgorithm {
+	sha256_with_rsa = 0;
+}
+
+// ref: Tv.Twitch.Fuel.Sds.CompressionSettings
+message CompressionSettings {
+	CompressionAlgorithm algorithm = 1;
+}
+
+// ref: Tv.Twitch.Fuel.Sds.Dir
+message Dir {
+	string path = 1;
+	uint32 mode = 2;
+}
+
+// ref: Tv.Twitch.Fuel.Sds.File
+message File {
+	string path = 1;
+	uint32 mode = 2;
+	int64 size = 3;
+	string created = 4;
+	Hash hash = 5;
+	bool hidden = 6;
+	bool system = 7;
+}
+
+// ref: Tv.Twitch.Fuel.Sds.Hash
+message Hash {
+	HashAlgorithm algorithm = 1;
+	bytes value = 2;
+}
+
+// ref: Tv.Twitch.Fuel.Sds.Manifest
+message Manifest {
+	repeated Package packages = 1 [packed=false];
+}
+
+// ref: Tv.Twitch.Fuel.Sds.ManifestHeader
+message ManifestHeader {
+	CompressionSettings compression = 1;
+	Hash hash = 2;
+	Signature signature = 3;
+}
+
+// ref: Tv.Twitch.Fuel.Sds.Package
+message Package {
+	string name = 1;
+	repeated File files = 2 [packed=false];
+	repeated Dir dirs = 3 [packed=false];
+}
+
+// ref: Tv.Twitch.Fuel.Sds.Signature
+message Signature {
+	SignatureAlgorithm algorithm = 1;
+	bytes value = 2;
+}
+
